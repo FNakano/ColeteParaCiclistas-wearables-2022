@@ -1,3 +1,5 @@
+#include<FastLED.h>
+
 // Mic ********************************************************************
 int MicSensorValue = 0;
 const int MicMicPin = 13;
@@ -11,8 +13,8 @@ int MicMillisOn = 0;
 // RFs ********************************************************************
 const int RFRight = 18;
 const int RFLeft = 19;
-const int RFLedPin1 = 4;
-const int RFLedPin2 = 5;
+// const int RFLedPin1 = 4;
+// const int RFLedPin2 = 5;
 int RFLedState1 = LOW;
 int RFLedState2 = LOW;
 unsigned long RFPreviousMillis1 = 0;
@@ -23,17 +25,71 @@ int RFMillisOn2 = 0;
 const long iterations = 1500;
 const long blinkInterval = 100;
 
+#define NUM_LEDS 30
+#define DATA_PIN 4
+CRGB leds[NUM_LEDS];
+
+
+void led(int side, int state) {
+  byte i, j, r, g, b;
+
+  if (side == 0) {
+    i = 0;
+    j = NUM_LEDS / 2;
+
+    if (state == HIGH) {
+      r = 255;
+      g = 45;
+      b = 0;
+
+      RFLedState1 == HIGH;
+    } else {
+      r = 0;
+      g = 0;
+      b = 0;
+
+      RFLedState1 == LOW;
+    }
+  } else {
+    i = NUM_LEDS / 2;
+    j = NUM_LEDS.;
+
+    if (state == HIGH) {
+      r = 255;
+      g = 45;
+      b = 0;
+
+      RFLedState2 == HIGH;
+    } else {
+      r = 0;
+      g = 0;
+      b = 0;
+
+      RFLedState2 == LOW;
+    }
+  }
+
+  for (int cur = i; cur < j; cur++) {
+    leds[cur] = CRGB(r, g, b);
+  }
+
+  FastLED.show();
+}
+
 
 void setup() {
   Serial.begin(115200);
+
+  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  // randomSeed(analogRead(0));
 
   pinMode(MicLedPin, OUTPUT);
   analogReadResolution(12);
 
   pinMode(RFRight, INPUT);
   pinMode(RFLeft, INPUT);
-  pinMode(RFLedPin1, OUTPUT); //4 número GPIO, OUTPUT = saida INPUT = entrada
-  pinMode(RFLedPin2, OUTPUT);
+  // pinMode(RFLedPin1, OUTPUT); //4 número GPIO, OUTPUT = saida INPUT = entrada
+  // pinMode(RFLedPin2, OUTPUT);
 }
 
 void loop() {
@@ -97,11 +153,13 @@ void loop() {
         RFLedState1 = LOW;
   
       // set the LED with the MicLedState of the variable:
-      digitalWrite(RFLedPin1, RFLedState1);
+      // digitalWrite(RFLedPin1, RFLedState1);
+      led(0, RFLedState1);
     }
     --RFMillisOn1;
   } else {
-    digitalWrite(RFLedPin1, LOW);
+    // digitalWrite(RFLedPin1, LOW);
+    led(0, LOW);
   }
 
   // Left RF ****************************************************************
@@ -125,10 +183,12 @@ void loop() {
         RFLedState2 = LOW;
   
       // set the LED with the MicLedState of the variable:
-      digitalWrite(RFLedPin2, RFLedState2);
+      // digitalWrite(RFLedPin2, RFLedState2);
+      led(1, RFLedState2);
     }
     --RFMillisOn2;
   } else {
-    digitalWrite(RFLedPin2, LOW);
+    // digitalWrite(RFLedPin2, LOW);
+    led(1, LOW);
   }
 }
