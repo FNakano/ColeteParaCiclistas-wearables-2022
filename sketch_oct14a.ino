@@ -17,6 +17,7 @@ const int RFLeft = 19;
 // const int RFLedPin2 = 5;
 int RFLedState1 = LOW;
 int RFLedState2 = LOW;
+int RFLedState3 = LOW;
 unsigned long RFPreviousMillis1 = 0;
 unsigned long RFPreviousMillis2 = 0;
 int RFMillisOn1 = 0;
@@ -25,9 +26,12 @@ int RFMillisOn2 = 0;
 const long iterations = 1500;
 const long blinkInterval = 100;
 
-#define NUM_LEDS 30
+#define NUM_LEDS 24
+#define NUM_LEDS2 4
 #define DATA_PIN 4
+#define DATA_PIN2 15
 CRGB leds[NUM_LEDS];
+CRGB leds2[NUM_LEDS2];
 
 
 void led(int side, int state) {
@@ -52,7 +56,7 @@ void led(int side, int state) {
     }
   } else {
     i = NUM_LEDS / 2;
-    j = NUM_LEDS.;
+    j = NUM_LEDS;
 
     if (state == HIGH) {
       r = 255;
@@ -77,10 +81,39 @@ void led(int side, int state) {
 }
 
 
+void ledMic(int state) {
+  byte i, j, r, g, b;
+
+  i = 0;
+  j = 4;
+
+  if (state == HIGH) {
+    r = 255;
+    g = 45;
+    b = 0;
+
+    RFLedState3 == HIGH;
+  } else {
+    r = 0;
+    g = 0;
+    b = 0;
+
+    RFLedState3 == LOW;
+  }
+
+  for (int cur = i; cur < j; cur++) {
+    leds2[cur] = CRGB(r, g, b);
+  }
+
+  FastLED.show();
+}
+
+
 void setup() {
   Serial.begin(115200);
 
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2);
   // randomSeed(analogRead(0));
 
   pinMode(MicLedPin, OUTPUT);
@@ -119,11 +152,11 @@ void loop() {
         MicLedState = LOW;
   
       // set the LED with the MicLedState of the variable:
-      digitalWrite(MicLedPin, MicLedState);
+      ledMic(MicLedState);
     }
     --MicMillisOn;
   } else {
-    digitalWrite(MicLedPin, LOW);
+    ledMic(LOW);
   }
 
   Serial.print(MicSensorValue);
