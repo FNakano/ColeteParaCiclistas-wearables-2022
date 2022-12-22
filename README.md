@@ -49,11 +49,11 @@ Figura 2- Feito usando yEd, arquivo-fonte da figura em /docs/layerModel.graphml:
 ![camadas](/docs/layerModel.png)
 
 
-## Explica como usar o programa
+## Como usar o programa
 
 Para executar `digitalLocker.py` no Node, este deve estar carregado com Micropython. Instruções sobre como carregar Micropython neste [link externo](https://github.com/FNakano/CFA/tree/master/programas/Micropython). Depois de carregar, ou transferir o programa ou executá-lo usando, por exemplo WebREPL (instruções neste [link externo]()https://github.com/FNakano/CFA/tree/master/programas/Micropython/webREPL), ou o método que preferir. No exemplo, uso Thonny e envio `digitalLocker.py` para o Node. No arquivo é definida a função `startServer()`. Desta forma, no REPL, digitar `import digitalLocker` para importar a função e digitar `digitalLocker.startServer()` para iniciar o servidor. Isto é mais cômodo que executar os comandos um por um, seja digitando, seja com copy-paste.
 
-## Explica como o motor funciona
+## Como o motor funciona
 
 ![Quando tiver vídeo da operação com navegador, transferir este para a explicação do servo.](./docs/output.gif)
 
@@ -63,7 +63,7 @@ O sinal de controle é um trem de pulsos de 20ms (50Hz), com duração do patama
 
 Um sinal PWM é especificado pela frequência e pelo ciclo de carga (*duty-cycle*). O ciclo de carga é o percentual do tempo em que o sinal fica em nível 1 comparado com o período todo do sinal. Por exemplo, um sinal de 50Hz tem período de 20ms. Se o ciclo de carga for 20%, durante 20% desse período (ié 4ms), o sinal fica em nível 1 e o restante do tempo (16ms) fica em nível zero. Se o ciclo de carga for 50%, o patamar 1 dura 10ms e o patamar zero dura 10ms.
 
-## Explica como enviar comandos para o motor
+## Como enviar comandos para o motor
 
 O ESP32 tem geradores PWM com frequência e ciclo de carga (*duty-cycle*) ajustáveis. O ciclo de carga é codificado como um inteiro entre 0 e 1023, que correspode (linearmente) ao ciclo de carga de zero até 100%. Como o motor responde a um sinal de duração de 1-2ms, o comando do ESP vai de aprox. 50-100.
 
@@ -77,7 +77,7 @@ motor.duty(40)                 # o patamar 1 dura 40/1024 do período
 ```
 Fonte: https://docs.micropython.org/en/latest/esp8266/tutorial/pwm.html#control-a-hobby-servo
 
-## Explica como o programa foi feito
+## Como o programa foi feito
 
 ```python
 p25 = Pin(25, Pin.OUT)
