@@ -10,13 +10,26 @@ Por isso fizemos um colete com setas sinalizadoras para os ciclistas e motocicli
 
 | Quantidade | Nome | Link para referência |
 | --- | --- | --- |
-| 1 | NodeMCU com ESP32 e cabo USB | https://www.usinainfo.com.br/nodemcu/esp32-nodemcu-iot-com-wifi-e-bluetooth-30-pinos-5147.html |
-| 1 | Servomotor Tower Pro SG90 | https://www.filipeflop.com/produto/micro-servo-9g-sg90-towerpro/ |
+| 1 | ESP32-WROOM-32 Devkit V1 | https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf |
+| 1 | fitas de LEDs aRGB | https://pt.aliexpress.com/item/2036819167.html?spm=a2g0o.productlist.main.3.6a0d39dfyRa073&algo_pvid=42e9d96a-c2fd-4721-afd4-f73c281b3c5c&algo_exp_id=42e9d96a-c2fd-4721-afd4-f73c281b3c5c-1&pdp_ext_f=%7B%22sku_id%22%3A%2267389781287%22%7D&pdp_npi=2%40dis%21BRL%2179.72%2159.81%21%21%21%21%21%40211be3d216719178731788378d0781%2167389781287%21sea&curPageLogUid=5lKpX7bm5Spr |
+| 1 | Módulo RF YK04 | https://www.faranux.com/product/4-channels-rf-remote-control-module-yk04/ |
+| 1 | Sensor de Som Modelo MicNakano | https://github.com/FNakano/CFA/tree/master/projetos/sensorDeSom |
 | X | Jumpers variados | --- |
-| {0,1} | protoboard | --- |
-| {0,1} | fonte de alimentação - 4 pilhas e um suporte | https://www.baudaeletronica.com.br/suporte-para-4-pilhas-aa.html |
+| 2 | Power banks | --- |
 
-Notas: É possível fazer a montagem somente com jumpers (sem protoboard) e recebendo energia do computador através da porta USB. Talvez seja a situação mais comum. Entretanto, há computadores que não fornecem energia suficiente através da porta USB, em outros casos, o acionamento do motor causa falha da comunicação entre computador e NodeMCU. Nesses casos pode ser conveniente usar uma fonte externa de energia (ex. pilhas, carregador de celular, ...).
+Obs: Utilizamos 2 power banks, um para o ESP32 e outro para os LEDs, pois com apenas um os LEDs aRGBs estavam roubando muita energia e o ESP ficou instável)
+
+ESP32:
+
+![esp](/img/esp.png)
+
+Sensor de Som Modelo MicNakano:
+
+![mic_nakano](/img/mic_nakano.png)
+
+Módulo RF YK04:
+
+![yk04](/img/yk04.png)
 
 ### Conexões
 
@@ -26,11 +39,11 @@ Notas: É possível fazer a montagem somente com jumpers (sem protoboard) e rece
 | GND | Marrom | Preto (Negativo das pilhas) |
 | --- | Vermelho | Vermelho (Positivo das pilhas |
 
-**Nota**: Não conectar qualquer outro pino do NodeMCU ou do motor ao positivo das pilhas. Isso conecta 6V ao Node ou ao motor, o que pode (não necessariamente vai) danificar o Node e/ou a porta USB do computador.
+**Nota**: Vale ressaltar que o GND da fita de LEDs tem que estar junto com o GND do ESP32, se não as cores da fita não irão funcinar corretamente.
 
-## Explica como montar o dispositivo físico
+## Como montar o dispositivo físico
 
-Fazer as conexões listadas, configurar, transferir e executar `digitalLocker.py` no Node e navegar para o IP indicado pelo Node.
+Fazer as conexões listadas, transferir o código `sketch_oct14a.ino` para o ESP32, e ligar o ESP32 e os LEDs com os power banks.
 
 ## Arquitetura e organização
 
