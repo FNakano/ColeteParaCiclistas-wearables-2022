@@ -11,7 +11,7 @@ Por isso fizemos um colete com setas sinalizadoras para os ciclistas e motocicli
 | Quantidade | Nome | Link para referência |
 | --- | --- | --- |
 | 1 | ESP32-WROOM-32 Devkit V1 | https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf |
-| 1 | fitas de LEDs endereçáveis (addressable RGB, aRGB) | https://pt.aliexpress.com/item/2036819167.html?spm=a2g0o.productlist.main.3.6a0d39dfyRa073&algo_pvid=42e9d96a-c2fd-4721-afd4-f73c281b3c5c&algo_exp_id=42e9d96a-c2fd-4721-afd4-f73c281b3c5c-1&pdp_ext_f=%7B%22sku_id%22%3A%2267389781287%22%7D&pdp_npi=2%40dis%21BRL%2179.72%2159.81%21%21%21%21%21%40211be3d216719178731788378d0781%2167389781287%21sea&curPageLogUid=5lKpX7bm5Spr |
+| 1 | fitas de LEDs endereçáveis (addressable RGB, aRGB) | https://a.aliexpress.com/_mLhYtMw |
 | 1 | Módulo RF YK04 | https://www.faranux.com/product/4-channels-rf-remote-control-module-yk04/ |
 | 1 | Sensor de Som Modelo MicNakano | https://github.com/FNakano/CFA/tree/master/projetos/sensorDeSom |
 | X | Jumpers variados | --- |
@@ -43,7 +43,7 @@ Módulo RF YK04:
 
 ## Como montar o dispositivo físico
 
-Fazer as conexões listadas, transferir o código `sketch_oct14a.ino` para o ESP32, e ligar o ESP32 e os LEDs com os power banks.
+Fazer as conexões listadas, transferir o código `sketch_oct14a.ino` para o ESP32 via Arduino IDE, e ligar o ESP32 e os LEDs com os power banks.
 
 ## Arquitetura e organização
 
