@@ -21,15 +21,15 @@ Obs: Utilizamos 2 power banks, um para o ESP32 e outro para os LEDs, pois com ap
 
 ESP32:
 
-![esp](/img/esp.png)
+![esp](/img/esp.jpg)
 
 Sensor de Som Modelo MicNakano:
 
-![mic_nakano](/img/mic_nakano.png)
+![mic_nakano](/img/mic_nakano.jpg)
 
 Módulo RF YK04:
 
-![yk04](/img/yk04.png)
+![yk04](/img/yk04.jpg)
 
 ### Conexões
 
