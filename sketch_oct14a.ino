@@ -1,4 +1,4 @@
-#include<FastLED.h>
+#include <FastLED.h>
 
 // Mic ********************************************************************
 int MicSensorValue = 0;
@@ -141,9 +141,11 @@ void loop() {
   }
 
   if (MicMillisOn != 0) {
-    if (millis() - MicPreviousMillis > blinkInterval) {
+    unsigned long MicCurrentMillis = millis();
+
+    if (MicCurrentMillis - MicPreviousMillis > blinkInterval) {
       // save the last time you blinked the LED
-      MicPreviousMillis = millis();
+      MicPreviousMillis = MicCurrentMillis;
   
       // if the LED is off turn it on and vice-versa:
       if (MicLedState == LOW)
@@ -172,9 +174,9 @@ void loop() {
 
   Serial.println(RFMillisOn1);
 
-  unsigned long RFcurrentMillis1 = millis();
-
   if (RFMillisOn1 > 0) {
+    unsigned long RFcurrentMillis1 = millis();
+
     if (RFcurrentMillis1 - RFPreviousMillis1 >= blinkInterval) {
       // save the last time you blinked the LED
       RFPreviousMillis1 = RFcurrentMillis1;
@@ -202,9 +204,9 @@ void loop() {
 
   Serial.println(RFMillisOn2);
 
-  unsigned long RFcurrentMillis2 = millis();
-
   if (RFMillisOn2 > 0) {
+    unsigned long RFcurrentMillis2 = millis();
+
     if (RFcurrentMillis2 - RFPreviousMillis2 > blinkInterval) {
       // save the last time you blinked the LED
       RFPreviousMillis2 = RFcurrentMillis2;
