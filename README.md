@@ -23,7 +23,7 @@ ESP32:
 
 ![esp](/img/esp32.jpg)
 
-Sensor de Som Modelo MicNakano:
+Sensor de som modelo MicNakano:
 
 ![mic_nakano](/img/mic_nakano.jpg)
 
