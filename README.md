@@ -21,7 +21,7 @@ Obs: Utilizamos 2 power banks, um para o ESP32 e outro para os LEDs, pois com ap
 
 ESP32:
 
-![esp](/img/esp.jpg)
+![esp](/img/esp32.jpg)
 
 Sensor de Som Modelo MicNakano:
 
