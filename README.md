@@ -75,36 +75,27 @@ Como nosso projeto não tem nenhum interface gráfica, como por exemplo um web s
 
 ## Como os LEDs endereçáveis funcionam?
 
-Ao contrário de um LED RGB comum, os LEDs endereçáveis possuem um microcontrolador em cada led. No caso do LED que utilizamos, possui o controlador WS2812b
+Ao contrário de um LED RGB comum, os LEDs endereçáveis possuem um microcontrolador em cada célula que é responsável por acencer os LEDs de cada cor (vermelho, verde e azul em cada célula) e os comandos que enviamos para cada microcontrolador é feito por apenas um fio, que é o Din.
+
+![addressable-led-strip-lights-18](img/addressable-led-strip-lights-18.webp)
+
+No caso do LED que utilizamos, possui o controlador WS2812b, que é o maior retângulo escuro na imagem abaixo.
 
 ![webpc-passthru](img/webpc-passthru.webp)
 
+Imagem mostrando o acionamento de cada led individualmente:
+
 ![ezgif-3-f3cf9f1843](img/ezgif-3-f3cf9f1843.gif)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Para mais detalhes, acesse o link https://blog.eletrogate.com/leds-enderecaveis-conhecendo-o-ws2812b/
 
 ## Como enviar comandos para os LEDs
 
-O ESP32 tem geradores PWM com frequência e ciclo de carga (*duty-cycle*) ajustáveis. O ciclo de carga é codificado como um inteiro entre 0 e 1023, que correspode (linearmente) ao ciclo de carga de zero até 100%. Como o motor responde a um sinal de duração de 1-2ms, o comando do ESP vai de aprox. 50-100.
+Para enviar os comandos para os LEDs, utilizamos a biblioteca `FastLED.h` e instanciamos os leds dessa forma:
 
-Para usá-los com Micropython, digitando o programa abaixo, o servo é colocado em um ângulo perto de zero. `motor.duty()` pode ser executados com outros valores, por exemplo, 60, 100, 120, para diferentes ângulos.
-
-
-
+```c++
+FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+```
 
 
 ## Como o programa foi feito
@@ -156,6 +147,7 @@ https://docs.arduino.cc/built-in-examples/digital/BlinkWithoutDelay
 https://create.arduino.cc/projecthub/talofer99/arduino-and-addressable-led-b8403f
 https://github.com/FNakano/CFA/tree/master/projetos/sensorDeSom
 https://blog.eletrogate.com/leds-enderecaveis-conhecendo-o-ws2812b/
+https://www.derunledlights.com/pt/the-difference-between-addressable-rgb-led-strip-ws2811-ws2812b-ws2813-ws2815-sk6812-sk9822/
 
 ## Colaborar usando github (meta)
 
