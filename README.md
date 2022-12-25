@@ -25,7 +25,7 @@ ESP32:
 
 Sensor de som modelo MicNakano:
 
-![mic_nakano](/img/mic_nakano.jpg)
+![mic_nakano](/img/mic_nakanoasd.jpg)
 
 Conexões:
 
@@ -36,7 +36,7 @@ Conexões:
 
 Módulo RF YK04: 
 
-![yk04](/img/yk04.jpg)
+![yk04](/img/yk04asd.jpg)
 
 ### Conexões
 
