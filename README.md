@@ -181,6 +181,10 @@ void led(int side, int state) { // Side: 0 = Right, 1 = Left. State: HIGH = On, 
 
 Para piscar o led do microfone, é utilizado a função `ledMic()` que é exatamente a mesma função anterior, porém sem o parâmetro `side`.
 
+## Vídeo do produto
+
+https://photos.app.goo.gl/zqSEsEeRtrnoj7mz9
+
 ## Referências
 
 https://www.esp32.com/viewtopic.php?t=11904
