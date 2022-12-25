@@ -27,17 +27,21 @@ Sensor de som modelo MicNakano:
 
 ![mic_nakano](/img/mic_nakano.jpg)
 
-Módulo RF YK04:
+Conexões:
+
+| Sensor de som | ESP32 | comentário |
+| --- | --- | --- |
+| 1 (mais distante do microfone) | Vcc (no ESP, 3,3V) | jumper verde |
+| 2 | GPIO2 | jumper vinho |
+| 3 | GND | jumper cinza |
+
+Módulo RF YK04: 
 
 ![yk04](/img/yk04.jpg)
 
 ### Conexões
 
-| Pino do NodeMCU | Pino do Motor | Pino das pilhas |
-| --- | --- | --- |
-| 25 | Laranja | --- |
-| GND | Marrom | Preto (Negativo das pilhas) |
-| --- | Vermelho | Vermelho (Positivo das pilhas |
+
 
 **Nota**: Vale ressaltar que o GND da fita de LEDs tem que estar junto com o GND do ESP32, se não as cores da fita não irão funcinar corretamente.
 
@@ -53,9 +57,9 @@ Para piscar uma luz é necessário utilizar a função `delay`, porém a utiliza
 
 Para controlar a fita de LEDs, optamos por utilizar a biblioteca `FastLED.h` e dividindo a fita de led principal em duas partes: direita e esqueda.
 
-<!-- ## Como usar o programa
+## Como usar o programa
 
-Para executar `digitalLocker.py` no Node, este deve estar carregado com Micropython. Instruções sobre como carregar Micropython neste [link externo](https://github.com/FNakano/CFA/tree/master/programas/Micropython). Depois de carregar, ou transferir o programa ou executá-lo usando, por exemplo WebREPL (instruções neste [link externo]()https://github.com/FNakano/CFA/tree/master/programas/Micropython/webREPL), ou o método que preferir. No exemplo, uso Thonny e envio `digitalLocker.py` para o Node. No arquivo é definida a função `startServer()`. Desta forma, no REPL, digitar `import digitalLocker` para importar a função e digitar `digitalLocker.startServer()` para iniciar o servidor. Isto é mais cômodo que executar os comandos um por um, seja digitando, seja com copy-paste. -->
+Como nosso projeto não tem nenhum interface gráfica, como por exemplo um web server, basta somente ligar o ESP32 e os LEDs nos power banks para o programa já executar.
 
 ## Como os LEDs endereçáveis funcionam?
 
