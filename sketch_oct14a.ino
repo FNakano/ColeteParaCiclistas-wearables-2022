@@ -1,6 +1,6 @@
 #include <FastLED.h>
 
-// Mic ********************************************************************
+// MicNakano ***************************************************************
 int MicSensorValue = 0;
 const int MicMicPin = 13;
 const int MicLedPin = 21;
@@ -10,11 +10,9 @@ int MicLedState = LOW;
 long MicPreviousMillis = 0;
 int MicMillisOn = 0;
 
-// RFs ********************************************************************
+// YK04 ********************************************************************
 const int RFRight = 18;
 const int RFLeft = 19;
-// const int RFLedPin1 = 4;
-// const int RFLedPin2 = 5;
 int RFLedState1 = LOW;
 int RFLedState2 = LOW;
 int RFLedState3 = LOW;
@@ -114,15 +112,12 @@ void setup() {
 
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
   FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2);
-  // randomSeed(analogRead(0));
 
   pinMode(MicLedPin, OUTPUT);
   analogReadResolution(12);
 
   pinMode(RFRight, INPUT);
   pinMode(RFLeft, INPUT);
-  // pinMode(RFLedPin1, OUTPUT); //4 número GPIO, OUTPUT = saida INPUT = entrada
-  // pinMode(RFLedPin2, OUTPUT);
 }
 
 void loop() {
@@ -130,9 +125,6 @@ void loop() {
   // read the analog / millivolts value for MicLedPin:
   MicSensorValue = analogRead(MicMicPin);
   
-  // print out the values you read:
-  // Serial.printf("ADC analog value = %d\n",analogValue);
-  // Serial.printf("ADC millivolts value = %d\n",analogVolts);
   MicSensMin = (MicSensorValue < MicSensMin) ? MicSensorValue : MicSensMin;
   MicSensMax = (MicSensorValue > MicSensMax) ? MicSensorValue : MicSensMax;
 
@@ -188,12 +180,10 @@ void loop() {
         RFLedState1 = LOW;
   
       // set the LED with the MicLedState of the variable:
-      // digitalWrite(RFLedPin1, RFLedState1);
       led(0, RFLedState1);
     }
     --RFMillisOn1;
   } else {
-    // digitalWrite(RFLedPin1, LOW);
     led(0, LOW);
   }
 
@@ -218,12 +208,10 @@ void loop() {
         RFLedState2 = LOW;
   
       // set the LED with the MicLedState of the variable:
-      // digitalWrite(RFLedPin2, RFLedState2);
       led(1, RFLedState2);
     }
     --RFMillisOn2;
   } else {
-    // digitalWrite(RFLedPin2, LOW);
     led(1, LOW);
   }
 }

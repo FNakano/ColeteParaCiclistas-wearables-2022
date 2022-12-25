@@ -27,19 +27,31 @@ Sensor de som modelo MicNakano:
 
 ![mic_nakano](/img/mic_nakano.jpg)
 
-Conexões:
+Pinos:
 
-| Sensor de som | ESP32 | comentário |
-| 1 (mais distante do microfone) | Vcc (no ESP, 3,3V) | jumper verde |
-| 2 | GPIO2 | jumper vinho |
-| 3 | GND | jumper cinza |
+| Sensor de som | comentário | Jumper
+| --- | --- | --- |
+| 1 (mais distante do microfone) | VIN 3.3V | Verde
+| 2 | Saída | Vinho
+| 3 | GND | Cinza
 
 Módulo RF YK04: 
 
 ![yk04](/img/yk04.jpg)
 
-### Conexões
+Pinos:
 
+| Sensor de som | comentário | Jumper
+| --- | --- | --- |
+| GND | GND | Cinza
+| 5V | 5V | Laranja
+| D0 | Saída 1 | Lilás
+| D1 | Saída 2 | Marrom
+| D2 | Saída 3 | ---
+| D3 | Saída 4 | ---
+| VT | Emite sinal se apertar qualquer botão do controle | ---
+
+### Conexões
 
 https://docs.google.com/spreadsheets/d/1dG1MfTy3x1gHLY0yxJIRdy7Aiv9Ak8zw/edit?usp=sharing&ouid=111602521034713673280&rtpof=true&sd=true
 
@@ -63,13 +75,27 @@ Como nosso projeto não tem nenhum interface gráfica, como por exemplo um web s
 
 ## Como os LEDs endereçáveis funcionam?
 
-![Quando tiver vídeo da operação com navegador, transferir este para a explicação do servo.](./docs/output.gif)
+Ao contrário de um LED RGB comum, os LEDs endereçáveis possuem um microcontrolador em cada led. No caso do LED que utilizamos, possui o controlador WS2812b
 
-O servomotor é um motor em que o eixo gira menos de uma volta e o ângulo de giro do eixo pode ser controlado. O motor específico desta montagem permite ângulos entre zero e 180 graus (especificação técnica: http://www.datasheet-pdf.com/PDF/SG90-Datasheet-TowerPro-791970). Este motor recebe energia pelos fios marrom (GND) e vermelho (VCC). A tensão de alimentação pode ser algo entre 4V e 7.2V. Nesta montagem será 6V. O fio laranja conduz o sinal de controle para o motor.
+![webpc-passthru](img/webpc-passthru.webp)
 
-O sinal de controle é um trem de pulsos de 20ms (50Hz), com duração do patamar em nível 1 variando entre 1 e 2ms. O ângulo de giro é proporcional à duração do patamar em nível 1. Por exemplo, com pulsos de 1,5ms durante o intervalo de 20ms, o ângulo de giro é de 90 graus (aproximadamente); com pulsos de 2ms, o ângulo é de 180 graus (https://www.engineersgarage.com/servo-motor-sg90-9g-with-89c51-microcontroller/). Esse tipo de sinal pertence à categoria dos sinais em *Pulse Width Modulation* (PWM).
+![ezgif-3-f3cf9f1843](img/ezgif-3-f3cf9f1843.gif)
 
-Um sinal PWM é especificado pela frequência e pelo ciclo de carga (*duty-cycle*). O ciclo de carga é o percentual do tempo em que o sinal fica em nível 1 comparado com o período todo do sinal. Por exemplo, um sinal de 50Hz tem período de 20ms. Se o ciclo de carga for 20%, durante 20% desse período (ié 4ms), o sinal fica em nível 1 e o restante do tempo (16ms) fica em nível zero. Se o ciclo de carga for 50%, o patamar 1 dura 10ms e o patamar zero dura 10ms.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Como enviar comandos para os LEDs
 
@@ -77,13 +103,9 @@ O ESP32 tem geradores PWM com frequência e ciclo de carga (*duty-cycle*) ajust�
 
 Para usá-los com Micropython, digitando o programa abaixo, o servo é colocado em um ângulo perto de zero. `motor.duty()` pode ser executados com outros valores, por exemplo, 60, 100, 120, para diferentes ângulos.
 
-```python
-from machine import Pin, PWM
-p25 = Pin(25, Pin.OUT)         # configura o pino 25 como saída
-motor = PWM(p25, freq=50)      # configura o pino 25 como PWM a 50Hz
-motor.duty(40)                 # o patamar 1 dura 40/1024 do período 
-```
-Fonte: https://docs.micropython.org/en/latest/esp8266/tutorial/pwm.html#control-a-hobby-servo
+
+
+
 
 ## Como o programa foi feito
 
@@ -133,6 +155,7 @@ https://www.esp32.com/viewtopic.php?t=11904
 https://docs.arduino.cc/built-in-examples/digital/BlinkWithoutDelay
 https://create.arduino.cc/projecthub/talofer99/arduino-and-addressable-led-b8403f
 https://github.com/FNakano/CFA/tree/master/projetos/sensorDeSom
+https://blog.eletrogate.com/leds-enderecaveis-conhecendo-o-ws2812b/
 
 ## Colaborar usando github (meta)
 
