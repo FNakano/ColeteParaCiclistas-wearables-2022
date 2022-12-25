@@ -32,12 +32,12 @@ CRGB leds[NUM_LEDS];
 CRGB leds2[NUM_LEDS2];
 
 
-void led(int side, int state) {
+void led(int side, int state) { // Side: 0 = Right, 1 = Left. State: HIGH = On, LOW = Off
   byte i, j, r, g, b;
 
   if (side == 0) {
-    i = 0;
-    j = NUM_LEDS / 2;
+    i = 0; // Beginning of the strip
+    j = NUM_LEDS / 2; // Half of the strip
 
     if (state == HIGH) {
       r = 255;
@@ -53,8 +53,8 @@ void led(int side, int state) {
       RFLedState1 == LOW;
     }
   } else {
-    i = NUM_LEDS / 2;
-    j = NUM_LEDS;
+    i = NUM_LEDS / 2; // Half of the strip
+    j = NUM_LEDS; // End of the strip
 
     if (state == HIGH) {
       r = 255;

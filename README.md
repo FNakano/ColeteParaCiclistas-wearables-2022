@@ -79,7 +79,7 @@ Ao contrário de um LED RGB comum, os LEDs endereçáveis possuem um microcontro
 
 ![addressable-led-strip-lights-18](img/addressable-led-strip-lights-18.webp)
 
-No caso do LED que utilizamos, possui o controlador WS2812b, que é o maior retângulo escuro na imagem abaixo.
+No caso do LED que utilizamos, possui o controlador WS2812B, que é o maior retângulo escuro na imagem abaixo.
 
 ![webpc-passthru](img/webpc-passthru.webp)
 
@@ -93,52 +93,91 @@ Para mais detalhes, acesse o link https://blog.eletrogate.com/leds-enderecaveis-
 
 Para enviar os comandos para os LEDs, utilizamos a biblioteca `FastLED.h` e instanciamos os leds dessa forma:
 
-```C++
+```c++
+CRGB leds[NUM_LEDS];
 FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 ```
 
+Obs: Para dividirmos a fita de LED principal em duas partes, declaramos também a segunda metade da fita com o seguinte código:
+
+```c++
+CRGB leds2[NUM_LEDS2];
+FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds2, NUM_LEDS2);
+```
+
+A variável `NUM_LEDS` é a quantidade de leds que possui na fita e o `DATA_PIN` é o pino do ESP em que o Din do led está conectado. O `NEOPIXEL` é o tipo da controladora que iremos trabalhar, pois o WS2812B é um controlador do tipo NeoPixel (https://www.digikey.ca/en/maker/projects/adafruit-neopixel-berguide/970445a726c1438a9023c1e78c42e0bb#:~:text=%E2%80%9CNeoPixel%E2%80%9D%20is%20Adafruit's%20brand%20for,a%20single%2Dwire%20control%20protocol.).
+
+Porém para ligar de fato os leds, temos que primeiro definir as cores, que no trecho abaixo está dentro do `for`, para definir as cores de cada célula, e em seguida dar um `show()` para atualizar as cores de todas as células.
+
+```c++
+for (int cur = i; cur < j; cur++) {
+    leds[cur] = CRGB(r, g, b);
+}
+
+FastLED.show();
+```
 
 ## Como o programa foi feito
 
-```python
-p25 = Pin(25, Pin.OUT)
-motor = PWM(p25, freq=50)
-motor.duty(40)
-```
-Fonte: https://docs.micropython.org/en/latest/esp8266/tutorial/pwm.html#control-a-hobby-servo
+Apenas um ponto que vale explicar no código é a função `led`. Ela irá fazer a fita led principal piscar. A quantidade de iterações que os leds ficarão piscando será determinado na variável `iterations` dentro da função `loop()`. Por exemplo, se o botão da direita for pressionado, esse trecho de código irá setar o `RFMillisOn1` com o número de iterações definida globalmente.
 
-```python
-s.bind(('', 3000))   # bind to port 3000 https://docs.micropython.org/en/latest/library/socket.html#socket.socket.bind
-s.listen(2)  # allow for 2 connection before refusing https://docs.micropython.org/en/latest/library/socket.html#socket.socket.listen
+```c++
+if(digitalRead(RFRight) > 0) {
+    RFMillisOn1 = iterations;
+}
 ```
 
-Uma requisição GET é feita (pelo navegador) concatenando, à URL (que endereça a requisição para o servidor), os parâmetros, no formato `?<id>=<valor>` no texto da requisição.
+Abaixo segue o código comentado da função `led()`:
 
-```python
-    request = conn.recv(1024)  # get bytes https://docs.micropython.org/en/latest/library/socket.html#socket.socket.recv
-    request = str(request)     # convert to string
+```c++
+void led(int side, int state) { // Side: 0 = Right, 1 = Left. State: HIGH = On, LOW = Off
+  byte i, j, r, g, b;
+
+  if (side == 0) {
+    i = 0; // Beginning of the strip
+    j = NUM_LEDS / 2; // Half of the strip
+
+    if (state == HIGH) {
+      r = 255;
+      g = 45;
+      b = 0;
+
+      RFLedState1 == HIGH;
+    } else {
+      r = 0;
+      g = 0;
+      b = 0;
+
+      RFLedState1 == LOW;
+    }
+  } else {
+    i = NUM_LEDS / 2; // Half of the strip
+    j = NUM_LEDS; // End of the strip
+
+    if (state == HIGH) {
+      r = 255;
+      g = 45;
+      b = 0;
+
+      RFLedState2 == HIGH;
+    } else {
+      r = 0;
+      g = 0;
+      b = 0;
+
+      RFLedState2 == LOW;
+    }
+  }
+
+  for (int cur = i; cur < j; cur++) {
+    leds[cur] = CRGB(r, g, b);
+  }
+
+  FastLED.show();
+}
 ```
 
-Sobre o texto (string) da requisição, busca-se o parâmetro do GET:
-
-```python
-locker_on = request.find('/?locker=on') # find get request text https://www.w3schools.com/python/ref_string_find.asp
-```
-
-Em função do valor, o eixo do motor é girado a mais ou a menos:
-
-```python
-    if locker_on == 6:
-        print('LOCKER ON')
-        motor.duty(110)
-        locker_state = "ON"
-    if locker_off == 6:
-        print('LOCKER OFF')
-        motor.duty(40)
-        locker_state = "OFF"
-```
-
-Ao final, a página é reenviada (não precisaria), para permitir um novo comando abre/fecha, junto com um código de resposta `HTTP-200` que significa OK (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
+Para piscar o led do microfone, é utilizado a função `ledMic()` que é exatamente a mesma função anterior, porém sem o parâmetro `side`.
 
 ## Referências
 
@@ -148,13 +187,4 @@ https://create.arduino.cc/projecthub/talofer99/arduino-and-addressable-led-b8403
 https://github.com/FNakano/CFA/tree/master/projetos/sensorDeSom
 https://blog.eletrogate.com/leds-enderecaveis-conhecendo-o-ws2812b/
 https://www.derunledlights.com/pt/the-difference-between-addressable-rgb-led-strip-ws2811-ws2812b-ws2813-ws2815-sk6812-sk9822/
-
-## Colaborar usando github (meta)
-
-A maneira indicada pelo mantenedor do github para colaborar com projetos hospedados nele é através de bifurcação e pull request: https://stackoverflow.com/questions/32750228/how-to-contribute-to-someone-elses-repository.
-
-É possível ser colaborador do projeto e fazer pull/push (https://stackoverflow.com/questions/42619669/how-to-make-branch-from-friends-repository), mas isto pode gerar confusão (quando fiz isso com outra pessoa eu a confundi e ela acabou reiniciando o repositório - `git init` - não foi um bom resultado).
-
-Quando procurei essa informação, nas postagens, encontrei um material interessante sobre a organização (interna) do git: https://stackoverflow.com/tags/git/info
-
-Sobre bifurcação: https://docs.github.com/pt/get-started/quickstart/fork-a-repo, https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks.
+https://www.digikey.ca/en/maker/projects/adafruit-neopixel-berguide/970445a726c1438a9023c1e78c42e0bb#:~:text=%E2%80%9CNeoPixel%E2%80%9D%20is%20Adafruit's%20brand%20for,a%20single%2Dwire%20control%20protocol.
