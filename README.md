@@ -30,7 +30,6 @@ Sensor de som modelo MicNakano:
 Conexões:
 
 | Sensor de som | ESP32 | comentário |
-| --- | --- | --- |
 | 1 (mais distante do microfone) | Vcc (no ESP, 3,3V) | jumper verde |
 | 2 | GPIO2 | jumper vinho |
 | 3 | GND | jumper cinza |
