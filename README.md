@@ -93,7 +93,7 @@ Para mais detalhes, acesse o link https://blog.eletrogate.com/leds-enderecaveis-
 
 Para enviar os comandos para os LEDs, utilizamos a biblioteca `FastLED.h` e instanciamos os leds dessa forma:
 
-```c++
+```C++
 FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 ```
 
