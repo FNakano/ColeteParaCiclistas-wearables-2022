@@ -57,6 +57,8 @@ https://docs.google.com/spreadsheets/d/1dG1MfTy3x1gHLY0yxJIRdy7Aiv9Ak8zw/edit?us
 
 **Nota**: Vale ressaltar que o GND da fita de LEDs tem que estar junto com o GND do ESP32, se não as cores da fita não irão funcinar corretamente.
 
+**Nota 2**: Na versão final do nosso produto removemos a protoboard, realizando as conexões diretamente.
+
 ## Como montar o dispositivo físico
 
 Fazer as conexões listadas, transferir o código `sketch_oct14a.ino` para o ESP32 via Arduino IDE, e ligar o ESP32 e os LEDs com os power banks.
