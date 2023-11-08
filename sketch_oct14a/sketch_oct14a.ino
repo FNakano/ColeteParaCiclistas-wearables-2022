@@ -1,18 +1,21 @@
 #include <FastLED.h>
 
 // MicNakano ***************************************************************
-int MicSensorValue = 0;
-const int MicMicPin = 13;
-const int MicLedPin = 21;
-int MicSensMin = 4095;
-int MicSensMax = 0;
+const int MicMicPin = A0;    // arduino nano
+const int MicLedPin = 12;    // arduino nano (mas para que é usado?)
+const int MicMaxD= 500;      // difference between max and min to blink noise alert
+const int MicAvg=370;        // average measurement to init variables
+
+int MicSensorValue = MicAvg;
+int MicSensMin = MicAvg;       // arduino nano - measured
+int MicSensMax = MicAvg;
 int MicLedState = LOW;
 long MicPreviousMillis = 0;
 int MicMillisOn = 0;
 
 // YK04 ********************************************************************
-const int RFRight = 18;
-const int RFLeft = 19;
+const int RFRight = 7;  // arduino nano
+const int RFLeft = 8;   // arduino nano
 int RFLedState1 = LOW;
 int RFLedState2 = LOW;
 int RFLedState3 = LOW;
@@ -26,8 +29,8 @@ const long blinkInterval = 100;
 
 #define NUM_LEDS 24
 #define NUM_LEDS2 4
-#define DATA_PIN 4
-#define DATA_PIN2 15
+#define DATA_PIN 6   // arduino nano
+#define DATA_PIN2 13 // arduino nano
 CRGB leds[NUM_LEDS];
 CRGB leds2[NUM_LEDS2];
 
@@ -114,7 +117,7 @@ void setup() {
   FastLED.addLeds<NEOPIXEL, DATA_PIN2>(leds2, NUM_LEDS2);
 
   pinMode(MicLedPin, OUTPUT);
-  analogReadResolution(12);
+  // analogReadResolution(12);  // arduino nano não tem esta função
 
   pinMode(RFRight, INPUT);
   pinMode(RFLeft, INPUT);
@@ -128,10 +131,14 @@ void loop() {
   MicSensMin = (MicSensorValue < MicSensMin) ? MicSensorValue : MicSensMin;
   MicSensMax = (MicSensorValue > MicSensMax) ? MicSensorValue : MicSensMax;
 
+/*
   if (MicSensorValue > 2300) {
     MicMillisOn = iterations;
   }
+*/
 
+  if ((MicSensMax-MicSensMin)>MicMaxD) MicMillisOn=2000;
+  
   if (MicMillisOn != 0) {
     unsigned long MicCurrentMillis = millis();
 
@@ -151,6 +158,8 @@ void loop() {
     --MicMillisOn;
   } else {
     ledMic(LOW);
+    MicSensMin=370;
+    MicSensMax=370;
   }
 
   Serial.print(MicSensorValue);
